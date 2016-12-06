@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <cstring>
 
-char button1[1][5] = {'.', ',' ,'!' ,'?' ,' '};
+char button1[1][5] = {'.', ',' , '!', '?' , ' '};
 char button2[1][3] = {'a', 'b' ,'c'};
 char button3[1][3] = {'d', 'e' ,'f'};
 char button4[1][3] = {'g', 'h' ,'i'};
@@ -56,7 +56,8 @@ int main(){
         while(1){
             scanf("%c",&c);
             if(c == '0'){
-                printS();
+                //printS();
+                printf("%c\n",button3[1][p[0]]);
                 break;
             }
             if(c == '1'){
