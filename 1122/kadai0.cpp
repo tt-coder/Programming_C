@@ -19,8 +19,12 @@ int main(){
             }
         }
     }
- 
-    cout << mink << endl;
- 
+    for(int i=a;i<=b;i++){
+      if(maxm<=p[i]-p[i+1]){
+        maxm=p[i]-p[i+1];
+        id=i;
+      }
+    }
+    cout << count << endl;
     return 0;
 }
