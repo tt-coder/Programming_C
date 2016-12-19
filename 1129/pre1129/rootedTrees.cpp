@@ -12,7 +12,7 @@ int n, depth[MAX];
 
 void print(int a){
     int c;
-    cout << "node " << u << ": ";
+    cout << "node " << a << ": ";
     cout << "parent = " << tree[a].parent << ", ";
     cout << "depth = " << depth[a] << ", ";
     if(tree[a].parent == NIL){
@@ -23,19 +23,19 @@ void print(int a){
         cout << "internal node, ";
     }
     cout << "[";
-    for(int i=0;c=tree[a].left;c!=NIL;i++;c=tree[c].right){
+    for(int i=0,c=tree[a].left;c!=NIL;i++,c=tree[c].right){
         if(i) cout << ", ";
         cout << c;
     }
     cout << "]" << endl;
 }
 
-int rec(int a, int b){
+int rec(int a, int b){ // 深さ-0
     depth[a] = b;
-    if(tree[a].right != NIL){
+    if(tree[a].right != NIL){ // 右に同じ高さ
         rec(tree[a].right,b);
     }
-    if(tree[a].left != NIL){
+    if(tree[a].left != NIL){ // 最も左に自分の深さ+1
         rec(tree[a].left,b+1);
     }
 }
