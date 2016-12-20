@@ -32,9 +32,8 @@ void mergeSort(int A[], int n, int left, int right){
         mergeSort(A, n, left, mid); // 左のソート
         mergeSort(A, n, mid, right); // 右のソート
         merge(A, n, left, mid, right);
-    }
-    if(left > right + 1){
-        count++;
+    }else{
+        
     }
 }
 
