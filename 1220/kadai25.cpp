@@ -5,21 +5,17 @@ using namespace std;
 int A[MAX], n;
 
 int partition(int p, int r){
-    int x,i,j,t;
-    x = A[r];
-    i = p-1;
-    for(j=p;j<r;j++){
-        if(A[j] <= x){
+    int x,i,j;
+    x = A[p];
+    i = p;
+    for(j=p+1;j<=r;j++){
+        if(A[j] < x){
             i++;
-            t = A[i];
-            A[i] = A[j];
-            A[j] = t;
+            swap(A[i],A[j]);
         }
     }
-    t = A[i+1];
-    A[i+1] = A[r];
-    A[r] = t;
-    return i+1;
+    swap(A[i],A[p]);
+    return i;
 }
 
 int main(){
@@ -31,10 +27,9 @@ int main(){
     q = partition(0, n-1);
     for(i=0;i<n;i++){
         if(i) cout << " ";
-        if(i==q) cout << "[";
         cout << A[i];
-        if(i==q) cout << "]";
     }
     cout << endl;
+    cout << q+1 << endl;
     return 0;
 }
