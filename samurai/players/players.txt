@@ -1,6 +1,0 @@
-players
-1 random randomPlayer $1
-2 greedy greedyPlayer $1
-3 "no check" nonCheckingPlayer $1
-4 timeout timeoutPlayer $1
-5 "too active" tooActivePlayer $1
