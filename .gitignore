@@ -1,1 +1,6 @@
 *.pdf
+*.o
+*.d
+Makefile
+Makefile~
+*.dSYM

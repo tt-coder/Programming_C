@@ -1,0 +1,95 @@
+SamurAI 3x3 2016 Sample Players (2016-11-24)
+
+This directory contains source programs for a number of sample AI
+players for SamurAI 3x3 game, and a sample player database file used
+by the SamurAI 3x3 2016 game management system.
+
+1. Installation
+
+Issueing "make all" in the parent directory ("manager") will also
+compile the sample players.  See the README file in the parent
+directory.
+
+2. Player Database
+
+The player database lists up players to be invoked from the SamurAI
+3x3 2016 game management system.  It has the format described below.
+
+The first line specifies the directory path where AI player programs
+are stored.
+
+  <directory-path>
+
+Each of the following lines specfies AI player information.  It has
+the following format.
+
+  <id> <name> <program-name> <command>
+
+<id> is the ID number for the program, a non-negative integer used to
+specify the player in the command line of the game management
+software.  No two AI players should have the same ID.
+
+<name> is a character string specifying the nickname of the AI.
+
+<program-name> is a character string specifying the program name of AI
+the player, which is appended to the <directory-path>, described
+above.  Subdirectories of the <directory-path> may be specified, as
+well as absolute path beginning with "/".
+
+<command> is a character string specifying how the program should be
+invoked.  Any substrings "$1" in this <command> string is substituted
+by the program path.  For example, if the path is
+"players/randomPlayer" and the <command> is simply "$1", the program
+is invoked by the command "players/randomPlayer".  If the AI player is
+written in Java and compiled into "players/RandomPlayer.class", the
+<program-name> and the <command> might be "RandomPlayer" and "java
+$1", respectively.
+
+Character strings specified in the player databse may contain spaces,
+in which case the strings should be enclosed with doublequotes.
+Escape sequences and 2-byte codes are not allowed.  When a doublequote
+character is to be used in the string, it should be preceded by a
+backslash '\'.
+
+Line in the player databse should not have more than 1024 characters.
+
+The file "players.txt" in the distribution is an example player
+database.
+
+3. Sample Players
+
+Players are individual executable programs which are invoked from the
+game management system.  Some sample players are provided in this
+directory.
+
+  randomPlayer: chooses actions randomly.
+  greedyPlayer: tries to occupy as many sections as possible with very
+    shallow search.
+
+These two players, especially the greedyPlayer, can be a good start
+point for writing your own player.  You may be surprised when you look
+into its source code "greedyPlayer.cpp", as it contains only four
+constants.
+
+The main program and several functions are in "players.cpp", which is
+used commonly in all the sample players.  An object of class "Player"
+is responsible for deciding the action of the samurai.  Different
+sample players only define different subclasses of the class "Player".
+
+The search code is in "planning.cpp", which defines the class
+"PlanningPlayer", a subclass of the class "Player".  This
+"PlanningPlayer" tries to maximize some evaluation function by
+choosing appropriate actions, and the four constants declared in the
+file "greedyplayer.cpp" are weights for different aspects of the
+result of actions.  You can describe a slightly different player by
+simply changing these weights.  For example, if you make
+"hurtingMerits" larger, your samurai will try more to occupy the
+section where an opponent samurai is.  If you make "hidingMerits"
+larger, your samurai prefer to hide itself.
+
+There are several other sample players, which are intended for
+testing the management system in handling misbehaving players.
+
+  timeoutPlayer: won't respond quickly enough.
+  tooActivePlayer: specifies too many actions.
+  nonCheckingPlayer: occasionally specifies invalid actions.
