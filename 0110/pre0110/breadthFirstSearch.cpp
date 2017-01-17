@@ -16,6 +16,7 @@ void bfs(int t){
     d[t] = 0;
     while(!q.empty()){
         u = q.front();
+        cout << u+1 << endl;
         q.pop();
         for(int v=0;v<n;v++){
             if(a[u][v] == 0) continue; // 繋がってなければスルー
@@ -44,6 +45,7 @@ int main(){
         }
     }
     bfs(0);
+    /*
     for(int i=0;i<n;i++){
         cout << i+1 << " ";
         if(d[i] == NUM){
@@ -52,5 +54,6 @@ int main(){
             cout << d[i] << endl;
         }
     }
+    */
     return 0;
 }
