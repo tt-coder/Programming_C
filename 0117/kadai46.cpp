@@ -5,44 +5,44 @@ using namespace std;
 int n;
 int a[105][105];
 
-int search(){
+int solve(){
     int u,minv;
     int cost = 0;
-    int d[105],p[105],state[105];
+    int dist[105],parent[105],state[105];
     for(int i=0;i<n;i++){
-        d[i] = INIT;
-        p[i] = -1;
+        dist[i] = INIT;
+        parent[i] = -1;
         state[i] = 0;
     }
-    d[0] = 0;
+    dist[0] = 0;
     while(1){
         minv = INIT;
         u = -1;
         for(int i=0;i<n;i++){
-            if(minv > d[i] && state[i] != 2){
+            if(minv > dist[i] && state[i] != 2){
                 u = i;
-                minv = d[i];
+                minv = dist[i];
             }
         }
         if(u == -1) break;
         state[u] = 2;
         for(int v=0;v<n;v++){
             if(state[v] != 2 && a[u][v] != INIT){
-                if(d[v] > a[u][v]){
-                    d[v] = a[u][v];
-                    p[v] = u;
+                if(dist[v] > a[u][v]){
+                    dist[v] = a[u][v];
+                    parent[v] = u;
                     state[v] = 1;
                 }
             }
         }
         cost = 0;
         for(int i=0;i<n;i++){
-            if(p[i] != -1){
-                cost += a[i][p[i]];
+            if(parent[i] != -1){
+                cost += a[i][parent[i]];
             }
         }
     }
-    return sum;
+    return cost;
 }
 
 int main(){
@@ -58,5 +58,5 @@ int main(){
           }
         }
     }
-    cout << search() << endl;
+    cout << solve() << endl;
 }
