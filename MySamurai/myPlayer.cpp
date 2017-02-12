@@ -6,21 +6,20 @@
 // 1~4 attack(SENW), 5~8 move, 9 hide
 static const int COSTS[] = {0, 4, 4, 4, 4, 2, 2, 2, 2, 1};
 int newLimit;
-double evalValue[3] = {};
-double infoValue[3] = {};
+double evalValue[3] = {1.0,0.1,0.1};
+int infoValue[3] = {};
 int dxdy[4] = {1,-1,1,-1};
-double current,max;
+double current,maxValue;
 list<int> bestPlay;
 list<int> currentPlay;
 SamuraiState* bestSamurai;
-
 struct MyPlayer: Player{
 
     void analyzeSamurai(){
         int dist,minDist=1000;
         int minPosX,minPosY;
         string dir;
-        SamuraiState* samurai,enemy;
+        SamuraiState samurai,enemy;
         for(int i=0;i<2;i++){
             for(int j=0;j<3;j++){
                 samurai = samuraiStates[i][j];
@@ -28,7 +27,7 @@ struct MyPlayer: Player{
                 int posY = samurai.y;
                 if(i==0){
                     for(int k=0;k<3;k++){
-                        enemy = samurai[1][k];
+                        enemy = samuraiStates[1][j];
                         int enemyPosX = enemy.x;
                         int enemyPosY = enemy.y;
                         dist = sqrt(pow(posX - enemyPosX,2) - pow(posY - enemyPosY,2));
@@ -69,8 +68,8 @@ struct MyPlayer: Player{
                 Undo undo;
                 info.tryAction(samurai, action, undo, infoValue[0], infoValue[1], infoValue[2]);
                 current = weight + evaluation();
-                if(newMerits > max){
-                    max = current;
+                if(current > maxValue){
+                    maxValue = current;
                     bestPlay = currentPlay;
                     bestSamurai = &samurai;
                 }
@@ -83,11 +82,10 @@ struct MyPlayer: Player{
     }
 
     void setValue(){
-        evalValue[3] = {1,0.3,0.1,0.1};
     }
 
     void initGame(){
-        bestMerits = -1;
+        maxValue = -1;
         bestPlay.clear();
         currentPlay.clear();
         setValue();
