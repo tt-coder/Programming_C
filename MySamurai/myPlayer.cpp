@@ -8,7 +8,7 @@ static const int COSTS[] = {0, 4, 4, 4, 4, 2, 2, 2, 2, 1};
 int newLimit;
 double evalValue[3] = {1.0,0.1,0.1};
 int infoValue[3] = {};
-int dxdy[4] = {1,-1,1,-1};
+int dxdy[4] = {1,2,3,4};
 double current,maxValue;
 list<int> bestPlay;
 list<int> currentPlay;
@@ -18,9 +18,9 @@ struct MyPlayer: Player{
     void analyzeSamurai(){
         int dist,minDist=1000;
         int minPosX,minPosY;
-        string dir;
+        int dir;
         SamuraiState samurai,enemy;
-        for(int i=0;i<2;i++){
+        for(int i=0;i<2 && minDist==0;i++){
             for(int j=0;j<3;j++){
                 samurai = samuraiStates[i][j];
                 int posX = samurai.x;
@@ -50,11 +50,13 @@ struct MyPlayer: Player{
                     }
                 }
             }
+            setValue(dir);
         }
     }
 
     int evaluation(){
         int value = 0;
+        analyzeSamurai();
         for(int i=0;i<3;i++){
             value += infoValue[i]*evalValue[i];
         }
@@ -81,14 +83,42 @@ struct MyPlayer: Player{
         }
     }
 
-    void setValue(){
+    void setValue(int dir){
+        Undo u;
+        switch(dir){
+            case 1:
+                for(int i=0;i<3;i++){
+                    evalValue[i] = infoValue[i]*0.1;
+                }
+                u.apply();
+                break;
+            case 2:
+                for(int i=0;i<3;i++){
+                    evalValue[i] = infoValue[i]*0.125;
+                }
+                u.apply();
+                break;
+            case 3:
+                for(int i=0;i<3;i++){
+                    evalValue[i] = infoValue[i]*0.15;
+                }
+                u.apply();
+                break;
+            case 4:
+                for(int i=0;i<3;i++){
+                    evalValue[i] = infoValue[i]*0.175;
+                }
+                u.apply();
+                break;
+            default:
+                break;
+        }
     }
 
     void initGame(){
         maxValue = -1;
         bestPlay.clear();
         currentPlay.clear();
-        setValue();
     }
 
     void play(GameInfo& info){
